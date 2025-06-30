@@ -3,21 +3,21 @@
 This repository contains all exercises from the Full Stack Open course.
 
 ## Project Structure
-
+```
 fullstack-open-exercises/
-├── part0/ # Part0 exercises
-├── part1/ # Part1 exercises
-│ ├── courseinfo/ # Course information app
-│ ├── unicafe/ # unicafe app
-│ └── anecdotes/ # anecdotes app
-├── part2/ # Part2 exercises
+├── part0/                  # Part0 exercises
+├── part1/                  # Part1 exercises
+│ ├── courseinfo/           # Course information app
+│ ├── unicafe/              # unicafe app
+│ └── anecdotes/            # anecdotes app
+├── part2/                  # Part2 exercises
 │ ├── to be added
 │ └── to be added
-├──  part3/ # Part3 exercises
+├──  part3/                 # Part3 exercises
 │ ├── to be added
 │ └── to be added
 └── README.md
-
+```
 
 ## Completed Exercises
 
