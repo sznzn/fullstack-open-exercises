@@ -2,7 +2,8 @@
 
 This repository contains all exercises from the Full Stack Open course.
 
-## Project Structure 
+## Project Structure
+
 fullstack-open-exercises/
 ├── part0/ # Part0 exercises
 ├── part1/ # Part1 exercises
