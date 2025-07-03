@@ -1,65 +1,34 @@
+import Menu from './components/Menu'
+// import './App.css'
+
 const App = () => {
-  const course = 'Half Stack application development'
-  const parts = [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
-
-
-
   return (
     <div>
-      <Header course={course} />
-      <Content parts={parts} />
-      <Total parts={parts} />
-      
+      <Menu />
+      <div className="container">
+        <h2>Welcome to Full Stack Open Exercises</h2>
+        <p>Select an exercise from the menu above:</p>
+        
+        <div className="exercises-grid">
+          <div className="exercise-card">
+            <h3>CourseInfo</h3>
+            <p>Course information display app</p>
+            <a href="/courseinfo">View →</a>
+          </div>
+          <div className="exercise-card">
+            <h3>Unicafe</h3>
+            <p>Feedback collection app</p>
+            <a href="/unicafe">View →</a>
+          </div>
+          <div className="exercise-card">
+            <h3>Anecdotes</h3>
+            <p>Anecdotes voting app</p>
+            <a href="/anecdotes">View →</a>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default App;
-
-const Content = (props) => {
-  return (
-    <div>
-      <Part name={props.parts[0].name} exercises={props.parts[0].exercises} />
-      <Part name={props.parts[1].name} exercises={props.parts[1].exercises} />
-      <Part name={props.parts[2].name} exercises={props.parts[2].exercises} />
-    </div>
-  )
-}
-
-
-const Part = (props) => {
-  return (
-    <p>
-      {props.name} - {props.exercises} 
-    </p>
-  )
-}
-const Total = (props) => {
-  return (
-    <div>
-      <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    </div>
-  )
-}
-
-const Header = (props) => {
-    console.log(props)
-  return (
-    <div>
-      <h1>{props.course}</h1>
-    </div>
-  )
-}
+export default App
