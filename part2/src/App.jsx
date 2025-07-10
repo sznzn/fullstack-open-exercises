@@ -1,6 +1,7 @@
-
-import Course from './components/Course'
-
+import CourseList from './components/Course'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Home from './components/Home'
+import Phonebook from './components/Phonebook'
 import './App.css'
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     {
     id: 1,
     name: 'Half Stack application development',
-    parts: [
+    parts: [  
       {
         name: 'Fundamentals of React',
         exercises: 10,
@@ -44,9 +45,49 @@ function App() {
     ]
   }
   ]
+
+
+  return (
+    <Router>
+      <div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
+          <div className="container">
+            <h1 className="navbar-brand mb-0">Full Stack Open - Part 2</h1>
+            <div className="navbar-nav">
+              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/courses">Courses</Link>
+              <Link className="nav-link" to="/phonebook">Phonebook</Link>
+              <Link className="nav-link" to="/exercise3">Exercises</Link>
+            </div>
+          </div>
+        </nav>
+        
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/courses" element={<CourseList courses={courses} />} />
+            <Route path="/phonebook" element={<Phonebook />} />
+            <Route path="/exercise3" element={<Exercise3 />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  )
+}
+
+
+
+
+
+
+
+
+// Exercise 3 component
+function Exercise3() {
   return (
     <div>
-      {courses.map(course => <Course key={course.id} course={course} />)}
+      <h3>Exercise 3 - To-do list</h3>
+      <p>This exercise is not completed yet...</p>
     </div>
   )
 }

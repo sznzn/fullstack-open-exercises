@@ -1,7 +1,7 @@
 const Course = ({ course }) => {
     const total = course.parts.reduce((sum, part) => sum + part.exercises, 0)
     return (
-        <div>
+        <div className="card mb-3">
             <h2>{course.name}</h2>
             <div>
                 {course.parts.map(part => (
@@ -15,4 +15,13 @@ const Course = ({ course }) => {
     )
 }
 
-export default Course;
+const CourseList = ({ courses }) => {
+    return (
+        <div>
+            {courses.map(course => <Course key={course.id} course={course} />)}
+        </div>
+    )
+}
+
+
+export default CourseList;
