@@ -3,7 +3,7 @@ import Menu from './components/Menu'
 import CourseInfo from './pages/CourseInfo'
 import Unicafe from './pages/Unicafe'
 import Anecdotes from './pages/Anecdotes'
- 
+
 
 const App = () => {
   return (

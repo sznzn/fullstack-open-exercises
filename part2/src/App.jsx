@@ -2,6 +2,7 @@ import CourseList from './components/Course'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Home from './components/Home'
 import Phonebook from './components/Phonebook'
+import Countries from './components/Countries'
 import './App.css'
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
               <Link className="nav-link" to="/">Home</Link>
               <Link className="nav-link" to="/courses">Courses</Link>
               <Link className="nav-link" to="/phonebook">Phonebook</Link>
-              <Link className="nav-link" to="/exercise3">Exercises</Link>
+              <Link className="nav-link" to="/countries">Countries</Link>
             </div>
           </div>
         </nav>
@@ -67,7 +68,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<CourseList courses={courses} />} />
             <Route path="/phonebook" element={<Phonebook />} />
-            <Route path="/exercise3" element={<Exercise3 />} />
+            <Route path="/countries" element={<Countries />} />
           </Routes>
         </div>
       </div>

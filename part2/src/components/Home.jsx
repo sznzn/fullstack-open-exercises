@@ -6,7 +6,7 @@ function Home() {
             <ul>
                 <li className="list-group-item"><strong>Exercise 1</strong> - Course information</li>
                 <li className="list-group-item"><strong>Exercise 2</strong> - Phonebook</li>
-                <li className="list-group-item"><strong>Exercise 3</strong> - To-do list</li>
+                <li className="list-group-item"><strong>Exercise 3</strong> - Data for countries</li>
             </ul>
         </div>
     )
