@@ -5,11 +5,12 @@ function Phonebook() {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [search, setSearch] = useState('')
+    
     useEffect(() => {
         console.log('fetching data')
         axios.get('http://localhost:3001/persons')
         .then(response => {
-            console.log('response', response.data)
+            console.log('**fetch reussit**', response.data)
             setPersons(response.data)
         })
     }, [])
@@ -17,37 +18,72 @@ function Phonebook() {
     const addPerson = (event) => {
         event.preventDefault()
         if (persons.some(person => person.name === newName)) {
-            alert(`${newName} is already in the phonebook`)
-            return
+            
+            const confirm = window.confirm(`${newName} is already in the phonebook, replace the old number?`)
+            if (confirm) {
+                const existingPerson = persons.find(person => person.name === newName)
+                const personObject = {
+                    id: existingPerson.id,
+                    name: existingPerson.name,
+                    number: newNumber,
+                }
+                axios.put(`http://localhost:3001/persons/${existingPerson.id}`, personObject)
+                    .then(response => {
+                        console.log('**updated reussit**', response.data)
+                        setPersons(persons.map(person => person.id === personObject.id ? response.data : person))
+                    })
+                    .catch(error => console.log('**updated failed**', error))
+            }
+
+        }else{
+            const personObject = {
+                name: newName,
+                number: newNumber
+                // let the server generate id
+                }
+            
+                // send to server first
+                axios.post('http://localhost:3001/persons', personObject)
+                .then(response => {
+                    console.log('**added reussit**', response.data)
+                    // use the server's return object (contains the correct id)
+                    setPersons(persons.concat(response.data))
+                    setNewName('')
+                    setNewNumber('')
+                })
+                .catch(error => {
+                    console.log('**added failed**', error)
+                    alert('add failed, please try again')
+                })
+            }
+    }
+        const deletePerson = (id) => {
+            if (confirm(`Are you sure you want to delete this person, id = ${id}`)) {
+                axios.delete(`http://localhost:3001/persons/${id}`)
+                .then(response => {
+                    console.log("**deleted reussit**",response.data)
+                    setPersons(persons.filter(person => person.id !== id))
+                })
+                .catch(error => console.log("**deleted failed**",error))
+            }
         }
-        const personObject = {
-            name: newName,
-            number: newNumber,
-            id: persons.length + 1
+        
+        
+        
+        const handleNameChange = (event) => {
+            setNewName(event.target.value)
         }
-    const newPersons = persons.concat(personObject)
-    console.log('persons', persons)
-    console.log('newPersons', newPersons)
-
-    setNewName('')
-    setPersons(newPersons)
-    
-    }
-
-    const handleNameChange = (event) => {
-        setNewName(event.target.value)
-    }
-
-    const handleNumberChange = (event) => {
-        setNewNumber(event.target.value)
-    }
-
-    const handleSearchChange = (event) => {
-        setSearch(event.target.value)
-    }
-    const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
-
-    return (
+        
+        const handleNumberChange = (event) => {
+            setNewNumber(event.target.value)
+        }
+        
+        const handleSearchChange = (event) => {
+            setSearch(event.target.value)
+        }
+        const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
+        
+        return (
         <div className="container">
             <h2>Phonebook</h2>
             <div className = "bg-light p-3 rounded">
@@ -64,7 +100,7 @@ function Phonebook() {
                 </div>
             </form>
             <h2>Numbers</h2>
-            <div className="border border-dark rounded p-3">{persons.map(person => <div key={person.id}>{person.name} : {person.number}</div>)}</div>
+            <div className="border border-dark rounded p-3">{persons.map(person => <div key={person.id}>{person.name} : {person.number} <button className="my-2 btn btn-sm btn-danger" onClick={() => deletePerson(person.id)}>delete</button></div>)}</div>
             <div className="mt-3 text-danger">debug here : {newName}</div>
 
             <hr />
@@ -73,5 +109,6 @@ function Phonebook() {
         </div>
     )
 }
+
 
 export default Phonebook;
