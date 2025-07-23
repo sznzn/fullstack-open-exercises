@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Notification from './Notification'
+
 function Phonebook() {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [search, setSearch] = useState('')
-    
+    const [notification, setNotification] = useState({message: null, type: 'success'})
+
     useEffect(() => {
         console.log('fetching data')
         axios.get('http://localhost:3001/persons')
@@ -31,6 +34,10 @@ function Phonebook() {
                     .then(response => {
                         console.log('**updated reussit**', response.data)
                         setPersons(persons.map(person => person.id === personObject.id ? response.data : person))
+                        setNotification({message: `${newName} updated successfully`, type: 'success'})
+                        setTimeout(() => {
+                            setNotification({message: null, type: 'success'})
+                        }, 5000)
                     })
                     .catch(error => console.log('**updated failed**', error))
             }
@@ -50,21 +57,49 @@ function Phonebook() {
                     setPersons(persons.concat(response.data))
                     setNewName('')
                     setNewNumber('')
+                    setNotification({message: `${newName} added successfully`, type: 'success'})
+                    setTimeout(() => {
+                        setNotification({message: null, type: 'success'})
+                    }, 5000)
                 })
                 .catch(error => {
                     console.log('**added failed**', error)
-                    alert('add failed, please try again')
+                    if(error.response.status === 404){
+                    setNotification({message: `name ${newName} was already removed from the server`, type: 'danger'})
+                    }else{
+                        setNotification({message: 'add failed, please try again', type: 'danger'})
+                    }
+                    setTimeout(() => {
+                        setNotification({message: null, type: 'danger'})
+                    }, 5000)
                 })
             }
     }
         const deletePerson = (id) => {
-            if (confirm(`Are you sure you want to delete this person, id = ${id}`)) {
+            const personToDelete = persons.find(person => person.id === id)
+            if (confirm(`Are you sure you want to delete this person ${personToDelete.name}, id = ${id}, name = ${personToDelete.name}`)) {
                 axios.delete(`http://localhost:3001/persons/${id}`)
                 .then(response => {
                     console.log("**deleted reussit**",response.data)
+                    
+                    setNotification({message: 'delete success', type: 'success'})
                     setPersons(persons.filter(person => person.id !== id))
+                    
+                    setTimeout(() => {
+                        setNotification({message: null, type: 'success'})
+
+                    }, 5000)
                 })
-                .catch(error => console.log("**deleted failed**",error))
+                .catch(error => {
+                    if(error.response.status === 404){
+                        setNotification({message: `name ${personToDelete.name} was already removed from the server`, type: 'danger'})
+                    }else{
+                        setNotification({message: 'delete failed, please try again', type: 'danger'})
+                    }
+                    setTimeout(() => {
+                        setNotification({message: null, type: 'danger'})
+                    }, 5000)
+                })
             }
         }
         
@@ -86,6 +121,7 @@ function Phonebook() {
         return (
         <div className="container">
             <h2>Phonebook</h2>
+            <Notification message={notification.message} type={notification.type} />
             <div className = "bg-light p-3 rounded">
                 <label htmlFor="search">Search</label>
                 <input className="form-control" value={search} onChange={handleSearchChange} placeholder='search by name'/>
