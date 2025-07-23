@@ -109,12 +109,12 @@ Then open your browser and navigate to:
 
 - [x] Part 1: React Basics
   - [x] CourseInfo (completed)
-  - [ ] Unicafe (in progress)
-  - [ ] Anecdotes (to be added)
+  - [x] Unicafe (completed)
+  - [x] Anecdotes (completed)
 - [x] Part 2: Communicating with Server
   - [x] Course (completed)
   - [x] Phonebook (completed)
-  - [ ] Countries (to be added)
+  - [x] Countries (completed)
 - [ ] Part 3: Programming a server with NodeJS and Express (to be added)
 
 ## About
