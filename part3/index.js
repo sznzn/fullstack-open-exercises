@@ -1,6 +1,15 @@
 import express from 'express';
+import morgan from 'morgan';
+
 const app = express();
 app.use(express.json());
+
+morgan.token('body', (req, res) => {
+  if (req.method === 'POST' || req.method === 'PUT') {
+  return JSON.stringify(req.body);  
+  }
+});
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
 let persons = [
   {
@@ -88,6 +97,7 @@ app.put('/api/persons/:id', (req, res) => {
     res.status(404).end();
   }
 })
+
 
 const PORT = 3001;
 app.listen(PORT, () => {
